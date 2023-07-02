@@ -20,6 +20,10 @@ class SplashScreen : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
+
+            // Apply transition animation
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+
         }, splashTimeOut)
     }
 }

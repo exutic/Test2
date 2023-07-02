@@ -8,4 +8,12 @@ class AboutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        finish()
+        // Apply transition animation
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
 }
+
