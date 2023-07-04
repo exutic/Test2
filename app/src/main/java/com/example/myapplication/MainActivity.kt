@@ -22,7 +22,6 @@ import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var tvWelcome: TextView
     private lateinit var imgLogin: ImageView
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         mediaPlayer?.start()
     }
 
-    fun findViews() {
+    private fun findViews() {
         tvWelcome = findViewById(R.id.tvWelcome)
         imgLogin = findViewById(R.id.imgLogin)
         ll_menu = findViewById<LinearLayout>(R.id.ll_menu_buttons)
@@ -95,7 +94,6 @@ class MainActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-
     fun startNewGame(view: View) {
         // Handle "New Game" button click
         val intent = Intent(this, NewGameActivity::class.java)
@@ -113,6 +111,14 @@ class MainActivity : AppCompatActivity() {
     fun openAboutScreen(view: View) {
         // Handle "About" button click
         val intent = Intent(this, AboutActivity::class.java)
+        startActivity(intent)
+        // Apply transition animation
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
+
+    fun openSettingsScreen(view: View) {
+        // Handle "About" button click
+        val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
         // Apply transition animation
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
