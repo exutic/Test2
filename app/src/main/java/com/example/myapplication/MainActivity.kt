@@ -15,6 +15,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.ImageView
