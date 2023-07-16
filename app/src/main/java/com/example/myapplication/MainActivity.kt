@@ -105,8 +105,8 @@ class MainActivity : AppCompatActivity() {
 
     fun continueGame(view: View) {
         // Handle "Continue" button click
-//        val intent = Intent(this, NewGameActivity::class.java)
-//        startActivity(intent)
+        val intent = Intent(this, CharacterSelectActivity::class.java)
+        startActivity(intent)
     }
 
     fun openAboutScreen(view: View) {

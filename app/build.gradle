@@ -44,5 +44,9 @@ dependencies {
 
 
     //Exo PLayer
-    implementation 'com.google.android.exoplayer:exoplayer:2.18.7'
+    implementation 'com.google.android.exoplayer:exoplayer:2.19.0'
+
+
+
+
 }
