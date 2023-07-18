@@ -46,6 +46,13 @@ dependencies {
     //Exo PLayer
     implementation 'com.google.android.exoplayer:exoplayer:2.19.0'
 
+    //DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    //LifeCycle
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
+
+
 
 
 

@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
 
     fun startNewGame(view: View) {
         // Handle "New Game" button click
-        val intent = Intent(this, NewGameActivity::class.java)
+        val intent = Intent(this, BasicCharacterDataActivity::class.java)
         startActivity(intent)
         // Apply transition animation
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -105,8 +105,8 @@ class MainActivity : AppCompatActivity() {
 
     fun continueGame(view: View) {
         // Handle "Continue" button click
-        val intent = Intent(this, CharacterSelectActivity::class.java)
-        startActivity(intent)
+//        val intent = Intent(this, CharacterSelectActivity::class.java)
+//        startActivity(intent)
     }
 
     fun openAboutScreen(view: View) {
