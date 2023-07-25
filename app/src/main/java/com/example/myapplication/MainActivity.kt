@@ -5,28 +5,34 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.media.MediaPlayer
-import android.opengl.Visibility
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.EditText
-import android.widget.TextView
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.view.ViewGroup
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var tvWelcome: TextView
     private lateinit var imgLogin: ImageView
-    private lateinit var ll_menu: LinearLayout
+    private lateinit var llMenu: LinearLayout
     private lateinit var vibrator: Vibrator
     private var mediaPlayer: MediaPlayer? = null
 
@@ -41,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     private fun findViews() {
         tvWelcome = findViewById(R.id.tvWelcome)
         imgLogin = findViewById(R.id.imgLogin)
-        ll_menu = findViewById<LinearLayout>(R.id.ll_menu_buttons)
+        llMenu = findViewById(R.id.ll_menu_buttons)
         vibrator = ContextCompat.getSystemService(this, Vibrator::class.java) as Vibrator
         // Create and configure MediaPlayer
         mediaPlayer = MediaPlayer.create(this, R.raw.piano_horror_silent_hill)
@@ -76,10 +82,10 @@ class MainActivity : AppCompatActivity() {
             // Fade animation
             val fadeAnimation = AlphaAnimation(0f, 1f)
             fadeAnimation.duration = 3000
-            ll_menu.startAnimation(fadeAnimation)
+            llMenu.startAnimation(fadeAnimation)
 
             //Set visibility of my menu layout to visible
-            ll_menu.visibility = View.VISIBLE
+            llMenu.visibility = View.VISIBLE
 
             // Vibration effect
             val vibrationEffect = VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE)
@@ -107,6 +113,9 @@ class MainActivity : AppCompatActivity() {
         // Handle "Continue" button click
 //        val intent = Intent(this, CharacterSelectActivity::class.java)
 //        startActivity(intent)
+        lifecycleScope.launch(Dispatchers.IO) {
+            loadData()
+        }
     }
 
     fun openAboutScreen(view: View) {
@@ -130,5 +139,73 @@ class MainActivity : AppCompatActivity() {
         finishAffinity() // Close the application
         // Apply transition animation
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
+
+
+    private val dataStore2: DataStore<Preferences> by preferencesDataStore(name = "my_data_store")
+
+    private suspend fun loadData() {
+        val characterNameKey = stringPreferencesKey("character_name")
+        val characterNameValue = dataStore2.data.map { preferences ->
+            preferences[characterNameKey] ?: "No Name"
+        }
+        val characterClassKey = stringPreferencesKey("character_class")
+        val characterClassValue = dataStore2.data.map { Preferences ->
+            Preferences[characterClassKey] ?: "No Class"
+        }
+        val characterBackgroundKey = stringPreferencesKey("character_background")
+        val characterBackgroundValue = dataStore2.data.map { Preferences ->
+            Preferences[characterBackgroundKey] ?: "No Background"
+        }
+        val characterRaceKey = stringPreferencesKey("character_race")
+        val characterRaceValue = dataStore2.data.map { Preferences ->
+            Preferences[characterRaceKey] ?: "No Race"
+        }
+
+        val characterAlignmentKey = stringPreferencesKey("character_alignment")
+        val characterAlignmentValue = dataStore2.data.map { Preferences ->
+            Preferences[characterAlignmentKey] ?: "No Alignment"
+        }
+        val characterAgeKey = stringPreferencesKey("character_age")
+        val characterAgeValue = dataStore2.data.map { Preferences ->
+            Preferences[characterAgeKey] ?: "No Age"
+        }
+
+        val characterHeightKey = stringPreferencesKey("character_height")
+        val characterHeightValue = dataStore2.data.map { Preferences ->
+            Preferences[characterHeightKey] ?: "No Height"
+        }
+        val characterWeightKey = stringPreferencesKey("character_weight")
+        val weight = dataStore2.data.map { Preferences ->
+            Preferences[characterWeightKey] ?: "No Weight"
+        }
+        val characterHairKey = stringPreferencesKey("character_hair")
+        val characterHairValue = dataStore2.data.map { Preferences ->
+            Preferences[characterHairKey] ?: "No Hair Color"
+        }
+        val characterEyesKey = stringPreferencesKey("character_eyes")
+        val characterEyesValue = dataStore2.data.map { Preferences ->
+            Preferences[characterEyesKey] ?: "No Eye Color"
+        }
+
+        // Log the value emitted by the Flow
+        characterEyesValue.collect { value ->
+            Log.d("Load Data", "character_name: $value")
+        }
+
+
+        // Update the UI in the main (UI) thread
+//        lifecycleScope.launch(Dispatchers.Main) {
+//            characterNameTextView.text = characterNameValue.toString()
+//            classTextView.text = characterClassValue.toString()
+//            backgroundTextView.text = characterBackgroundValue.toString()
+//            raceTextView.text = characterRaceValue.toString()
+//            alignmentTextView.text = characterAlignmentValue.toString()
+//            ageTextView.text = characterAgeValue.toString()
+//            heightTextView.text = characterHeightValue.toString()
+//            weightTextView.text = weight.toString()
+//            hairColorTextView.text = characterHairValue.toString()
+//            eyesColorTextView.text = characterEyesValue.toString()
+//        }
     }
 }

@@ -2,8 +2,10 @@ package com.example.myapplication
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -12,12 +14,9 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope.coroutineContext
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlin.coroutines.coroutineContext
 
 
 class BasicCharacterDataActivity : AppCompatActivity() {
@@ -33,14 +32,34 @@ class BasicCharacterDataActivity : AppCompatActivity() {
     private lateinit var eyesColorEditText: EditText
 
 
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "my_data_store")
-
+    private val dataStore: DataStore<Preferences> by preferencesDataStore(name = "my_data_store")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_basic_character_data)
+        findViews()
+        initClicks()
+    }
 
+    private fun initClicks() {
+        val submitButton = findViewById<Button>(R.id.submit_n_continue)
+        submitButton.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                saveData()
 
+            }
+            //'IO' for background task
+            //'Main' for Main Ui or Main thread task
+        }
+
+        val clearButton = findViewById<Button>(R.id.clear_all_fields)
+        clearButton.setOnClickListener {
+            clearFields()
+        }
+
+    }
+
+    private fun findViews() {
         // Initialize the EditTexts
         characterNameEditText = findViewById(R.id.character_name_edit_text)
         classEditText = findViewById(R.id.class_edit_text)
@@ -52,48 +71,7 @@ class BasicCharacterDataActivity : AppCompatActivity() {
         weightEditText = findViewById(R.id.weight_edit_text)
         hairColorEditText = findViewById(R.id.hair_color_edit_text)
         eyesColorEditText = findViewById(R.id.eyes_color_edit_text)
-
-        val submitButton = findViewById<Button>(R.id.submit_n_continue)
-        submitButton.setOnClickListener {
-//            runBlocking {
-//                saveData()
-//            }
-            // Call the suspend function saveData inside a coroutine scope
-            lifecycleScope.launch(Dispatchers.IO) {
-                saveData()
-            }
-
-            //IO for background task
-            //Main for Main Ui or Main thread task
-        }
-
-        val clearButton = findViewById<Button>(R.id.clear_all_fields)
-        clearButton.setOnClickListener {
-            clearFields()
-        }
-
     }
-
-    // Save data into DataStore
-    private suspend fun saveData() {
-        val characterName = characterNameEditText.text.toString()
-        val charClass = classEditText.text.toString()
-        val background = backgroundEditText.text.toString()
-        // Add more data retrieval from other EditText elements as needed
-
-        val dataStoreKeyCharacterName = stringPreferencesKey("character_name")
-        val dataStoreKeyCharClass = stringPreferencesKey("character_class")
-        val dataStoreKeyBackground = stringPreferencesKey("background")
-
-        // Use the DataStore dataStore.edit() function to edit the preferences
-        dataStore.edit { preferences ->
-            preferences[dataStoreKeyCharacterName] = characterName
-            preferences[dataStoreKeyCharClass] = charClass
-            preferences[dataStoreKeyBackground] = background
-            // Add more key-value pairs for other data as needed
-        }
-    }
-
 
     private fun clearFields() {
         // Clear all the EditText fields
@@ -109,17 +87,43 @@ class BasicCharacterDataActivity : AppCompatActivity() {
         eyesColorEditText.text.clear()
     }
 
-    // Load data from DataStore and set it to the TextView
-    private suspend fun loadData() {
-        val dataStoreKeyCharacterName = stringPreferencesKey("character_name")
-        val characterName = dataStore.data.map { preferences ->
-            preferences[dataStoreKeyCharacterName] ?: ""
-        }
+    private suspend fun saveData() {
 
-        // Update the UI in the main (UI) thread
-        lifecycleScope.launch(Dispatchers.Main) {
-//            myTextView.text = characterName
-            // myTextView can be change to the desired TextView
+        val characterName = characterNameEditText.text.toString()
+        val charClass = classEditText.text.toString()
+        val background = backgroundEditText.text.toString()
+        val race = raceEditText.text.toString()
+        val align = alignmentEditText.text.toString()
+        val age = ageEditText.text.toString()
+        val height = heightEditText.text.toString()
+        val weight = weightEditText.text.toString()
+        val hair = hairColorEditText.text.toString()
+        val eyes = eyesColorEditText.text.toString()
+
+        val characterNameKey = stringPreferencesKey("character_name")
+        val characterClassKey = stringPreferencesKey("character_class")
+        val characterBackgroundKey = stringPreferencesKey("character_background")
+        val characterRaceKey = stringPreferencesKey("character_race")
+        val characterAlignmentKey = stringPreferencesKey("character_alignment")
+        val characterAgeKey = stringPreferencesKey("character_age")
+        val characterHeightKey = stringPreferencesKey("character_height")
+        val characterWeightKey = stringPreferencesKey("character_weight")
+        val characterHairKey = stringPreferencesKey("character_hair")
+        val characterEyesKey = stringPreferencesKey("character_eyes")
+
+        dataStore.edit { Preferences ->
+            Preferences[characterNameKey] = characterName
+            Preferences[characterClassKey] = charClass
+            Preferences[characterBackgroundKey] = background
+            Preferences[characterRaceKey] = race
+            Preferences[characterAlignmentKey] = align
+            Preferences[characterAgeKey] = age
+            Preferences[characterHeightKey] = height
+            Preferences[characterWeightKey] = weight
+            Preferences[characterHairKey] = hair
+            Preferences[characterEyesKey] = eyes
         }
     }
+
+
 }

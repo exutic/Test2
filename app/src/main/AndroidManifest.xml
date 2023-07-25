@@ -23,20 +23,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".PdfViewerActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".TestCharacterCreationActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".CharacterSelectActivity"
             android:exported="false">
             <meta-data
