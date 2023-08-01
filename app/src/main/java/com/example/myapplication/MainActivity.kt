@@ -24,7 +24,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.myapplication.data_store.DataStoreViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var llMenu: LinearLayout
     private lateinit var vibrator: Vibrator
     private var mediaPlayer: MediaPlayer? = null
+    private lateinit var viewModel: DataStoreViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +45,11 @@ class MainActivity : AppCompatActivity() {
         findViews()
         // Start playing music
         mediaPlayer?.start()
+
+
+//        viewModel = ViewModelProvider(this).get(DataStoreViewModel::class.java)
+        viewModel = ViewModelProvider(this)[DataStoreViewModel::class.java]
+
     }
 
     private fun findViews() {
@@ -141,56 +149,54 @@ class MainActivity : AppCompatActivity() {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
-
-    private val dataStore2: DataStore<Preferences> by preferencesDataStore(name = "my_data_store")
-
     private suspend fun loadData() {
+        val dataStore = viewModel.dataStore
         val characterNameKey = stringPreferencesKey("character_name")
-        val characterNameValue = dataStore2.data.map { preferences ->
+        val characterNameValue = dataStore.data.map { preferences ->
             preferences[characterNameKey] ?: "No Name"
         }
         val characterClassKey = stringPreferencesKey("character_class")
-        val characterClassValue = dataStore2.data.map { Preferences ->
+        val characterClassValue = dataStore.data.map { Preferences ->
             Preferences[characterClassKey] ?: "No Class"
         }
         val characterBackgroundKey = stringPreferencesKey("character_background")
-        val characterBackgroundValue = dataStore2.data.map { Preferences ->
+        val characterBackgroundValue = dataStore.data.map { Preferences ->
             Preferences[characterBackgroundKey] ?: "No Background"
         }
         val characterRaceKey = stringPreferencesKey("character_race")
-        val characterRaceValue = dataStore2.data.map { Preferences ->
+        val characterRaceValue = dataStore.data.map { Preferences ->
             Preferences[characterRaceKey] ?: "No Race"
         }
 
         val characterAlignmentKey = stringPreferencesKey("character_alignment")
-        val characterAlignmentValue = dataStore2.data.map { Preferences ->
+        val characterAlignmentValue = dataStore.data.map { Preferences ->
             Preferences[characterAlignmentKey] ?: "No Alignment"
         }
         val characterAgeKey = stringPreferencesKey("character_age")
-        val characterAgeValue = dataStore2.data.map { Preferences ->
+        val characterAgeValue = dataStore.data.map { Preferences ->
             Preferences[characterAgeKey] ?: "No Age"
         }
 
         val characterHeightKey = stringPreferencesKey("character_height")
-        val characterHeightValue = dataStore2.data.map { Preferences ->
+        val characterHeightValue = dataStore.data.map { Preferences ->
             Preferences[characterHeightKey] ?: "No Height"
         }
         val characterWeightKey = stringPreferencesKey("character_weight")
-        val weight = dataStore2.data.map { Preferences ->
+        val weight = dataStore.data.map { Preferences ->
             Preferences[characterWeightKey] ?: "No Weight"
         }
         val characterHairKey = stringPreferencesKey("character_hair")
-        val characterHairValue = dataStore2.data.map { Preferences ->
+        val characterHairValue = dataStore.data.map { Preferences ->
             Preferences[characterHairKey] ?: "No Hair Color"
         }
         val characterEyesKey = stringPreferencesKey("character_eyes")
-        val characterEyesValue = dataStore2.data.map { Preferences ->
+        val characterEyesValue = dataStore.data.map { Preferences ->
             Preferences[characterEyesKey] ?: "No Eye Color"
         }
 
         // Log the value emitted by the Flow
         characterEyesValue.collect { value ->
-            Log.d("Load Data", "character_name: $value")
+            Log.d("Load Data", "characterEyesValue: $value")
         }
 
 

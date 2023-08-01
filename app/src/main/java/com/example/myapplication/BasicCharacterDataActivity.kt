@@ -1,21 +1,19 @@
 package com.example.myapplication
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.myapplication.data_store.DataStoreViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 
@@ -31,14 +29,12 @@ class BasicCharacterDataActivity : AppCompatActivity() {
     private lateinit var hairColorEditText: EditText
     private lateinit var eyesColorEditText: EditText
 
-
-    private val dataStore: DataStore<Preferences> by preferencesDataStore(name = "my_data_store")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_basic_character_data)
         findViews()
         initClicks()
+
     }
 
     private fun initClicks() {
@@ -46,8 +42,11 @@ class BasicCharacterDataActivity : AppCompatActivity() {
         submitButton.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 saveData()
-
             }
+            val intent = Intent(this, NewGameActivity::class.java)
+            startActivity(intent)
+            // Apply transition animation
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             //'IO' for background task
             //'Main' for Main Ui or Main thread task
         }
@@ -87,19 +86,9 @@ class BasicCharacterDataActivity : AppCompatActivity() {
         eyesColorEditText.text.clear()
     }
 
-    private suspend fun saveData() {
+    private lateinit var viewModel: DataStoreViewModel
 
-        val characterName = characterNameEditText.text.toString()
-        val charClass = classEditText.text.toString()
-        val background = backgroundEditText.text.toString()
-        val race = raceEditText.text.toString()
-        val align = alignmentEditText.text.toString()
-        val age = ageEditText.text.toString()
-        val height = heightEditText.text.toString()
-        val weight = weightEditText.text.toString()
-        val hair = hairColorEditText.text.toString()
-        val eyes = eyesColorEditText.text.toString()
-
+    companion object {
         val characterNameKey = stringPreferencesKey("character_name")
         val characterClassKey = stringPreferencesKey("character_class")
         val characterBackgroundKey = stringPreferencesKey("character_background")
@@ -110,6 +99,21 @@ class BasicCharacterDataActivity : AppCompatActivity() {
         val characterWeightKey = stringPreferencesKey("character_weight")
         val characterHairKey = stringPreferencesKey("character_hair")
         val characterEyesKey = stringPreferencesKey("character_eyes")
+    }
+
+    private suspend fun saveData() {
+        viewModel = ViewModelProvider(this)[DataStoreViewModel::class.java]
+        val dataStore = viewModel.dataStore
+        val characterName = characterNameEditText.text.toString()
+        val charClass = classEditText.text.toString()
+        val background = backgroundEditText.text.toString()
+        val race = raceEditText.text.toString()
+        val align = alignmentEditText.text.toString()
+        val age = ageEditText.text.toString()
+        val height = heightEditText.text.toString()
+        val weight = weightEditText.text.toString()
+        val hair = hairColorEditText.text.toString()
+        val eyes = eyesColorEditText.text.toString()
 
         dataStore.edit { Preferences ->
             Preferences[characterNameKey] = characterName
