@@ -3,27 +3,35 @@
     {
       "chapterNumber": 1,
       "chapterTitle": "Chapter 1: The Beginning",
-      "chapterText": "Once upon a time..."
+      "chapterText": "Once upon a time...you are in a dark and cold jungle , You can not see anything If you want to find the way please take the torch and turn on it  now you see a lagoon if  you want to pass through it please click the green button,\n\nAs you cautiously move forward, guided by the faint light of the torch, you come across a fork in the path. To the left, the dense foliage becomes even thicker, and the eerie sounds grow louder, almost beckoning you to explore its mysteries. To the right, the path seems slightly more trodden, hinting at potential civilization.\n\nNow, it's up to you to make a choice. Do you want to venture into the deeper and darker parts of the jungle by going left (click the left button), or would you rather follow the more traveled path on the right (click the right button)?",
+      "Task:" : "What do you do at this time ?",
+      "Choice1": "Light the Torch",
+      "Choice2": "Do Nothing",
+      "Choice3": "Flee!!!"
     },
     {
       "chapterNumber": 2,
-      "chapterTitle": "Chapter 2: The Adventure",
-      "chapterText": "As the hero set off on an adventure..."
+      "chapterTitle": "Chapter 2: The Decision",
+      "chapterText": "Faced with a tough decision, the hero...if you click the left button, the torchlight reveals ancient ruins . It's a lost civilization, forgotten by time, waiting for an intrepid explorer to unveil its secrets. As you go deeper into the ruins, you encounter puzzles and challenges that guard the treasures and knowledge of this enigmatic civilization. The ruins are filled with inscriptions and symbols in a lost language. To unlock the heart of the jungle, you must find five elemental keys hidden within the ruins. Each key is protected by a challenging chamber representing the elements—Earth, Water, Fire, Air, and Spirit.\n\nSuccess in obtaining all the elemental keys unlocks the massive stone door, if you find all the elemental keys you can restore balance and uncover the secrets of this forgotten civilization.",
+      "Task:" : "What do you do at this time ?",
+      "Choice1": "Light the Torch",
+      "Choice2": "Do Nothing",
+      "Choice3": "Flee!!!"
     },
     {
       "chapterNumber": 3,
       "chapterTitle": "Chapter 3: The Encounter",
-      "chapterText": "In the dark forest, the hero encountered..."
+      "chapterText": "In the dark forest, the hero encountered...Throughout the game, the player's choices and problem-solving skills shape the outcome of the adventure, making for an immersive and exciting gaming experience.\n\n\n\nIf you click the right button, you approach the massive and old house that looms before you. The sounds of faint whispers and cries for help emanate from within, urging you to hurry and find a way inside to help the people in need.\nSearching around the house, you notice a small, rusted key hidden among the leaves near the entrance. It must be the key to unlock the front door. You pick it up and cautiously insert it into the keyhole, turning it with a creaking sound as the door swings open."
     },
     {
       "chapterNumber": 4,
-      "chapterTitle": "Chapter 4: The Decision",
-      "chapterText": "Faced with a tough decision, the hero..."
+      "chapterTitle": "Chapter 4: The Adventure",
+      "chapterText": "As the hero set off on an adventure...Inside, the atmosphere is eerie and unsettling. You proceed cautiously through the creaky hallways, drawn towards the source of the voices.\n\nAs you explore the house, you discover that it is not just abandoned but haunted by restless spirits. The inhabitants of this house were trapped here long ago, unable to escape the clutches of the vengeful spirits that roam its halls."
     },
     {
       "chapterNumber": 5,
       "chapterTitle": "Chapter 5: The Showdown",
-      "chapterText": "In the final showdown..."
+      "chapterText": "In the final showdown...To save the people and set their spirits free, you must uncover the tragic events that unfolded in this house and find a way to bring peace to the tormented souls. As you progress through the rooms, you come across letters,  and memories left behind, giving you glimpses into the past."
     }
   ]
 }

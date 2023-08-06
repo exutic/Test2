@@ -3,12 +3,16 @@ package com.example.myapplication
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.myapplication.story_data.loadStoryFromJson
+import org.json.JSONObject
+import java.io.IOException
+import java.nio.charset.Charset
 
 class NewGameActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
@@ -33,9 +37,7 @@ class NewGameActivity : AppCompatActivity() {
 
         // Set the chapter information in the TextView
         chapterTextView.text =
-            "Chapter Number: ${chapterToLoad.chapterNumber}\n" +
-                    "Chapter Title: ${chapterToLoad.chapterTitle}\n" +
-                    "Chapter Text: ${chapterToLoad.chapterText}"
+            "Chapter Number: ${chapterToLoad.chapterNumber}\n" + "Chapter Title: ${chapterToLoad.chapterTitle}\n" + "Chapter Text: ${chapterToLoad.chapterText}"
 
         // Show the buttons layout with a slide-up animation
         val buttonLayout = findViewById<LinearLayout>(R.id.buttonLayout)
