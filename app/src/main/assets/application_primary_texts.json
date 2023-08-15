@@ -1,18 +1,18 @@
 {
   "about": {
-    "aboutTitle": "About the game",
-    "aboutText": "You are in about page or screen"
+    "aboutTitle_tv": "About the Game",
+    "aboutText_tv": "You Are In about page or screen"
   },
   "settings": {
-    "settingsTitle": "Settings Title",
-    "settings_btn_1": "Back to Main Menu"
+    "settingTitle_tv": "Settings",
+    "settings_btn_back": "Back"
   },
   "mainMenu": {
-    "menuTitle": "Settings Title",
-    "Load game" : "Back to Main Menu",
-    "newGame" : "Back to Main Menu",
-    "continue" : "Back to Main Menu",
-    "About" : "Back to Main Menu",
-    "Exit Game" : "Back to Main Menu"
+    "menuTitle_tv": "Welcome, ",
+    "newGame_btn": "New Game",
+    "continue_btn": "Continue",
+    "settings_btn": "Setting",
+    "about_btn": "About",
+    "exitGame_btn": "Exit Game"
   }
 }

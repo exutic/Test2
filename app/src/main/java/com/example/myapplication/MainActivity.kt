@@ -40,8 +40,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var llMenu: LinearLayout
     private lateinit var vibrator: Vibrator
     private var mediaPlayer: MediaPlayer? = null
-    private lateinit var viewModel: DataStoreViewModel
-
+    companion object{
+        lateinit var viewModel: DataStoreViewModel
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -125,7 +126,7 @@ class MainActivity : AppCompatActivity() {
         // Handle "Continue" button click
 //        val intent = Intent(this, CharacterSelectActivity::class.java)
 //        startActivity(intent)
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.Main) {
             loadData()
         }
     }
@@ -227,17 +228,19 @@ class MainActivity : AppCompatActivity() {
         val jsonObject = JSONObject(jsonString)
 
         // Access the values from the JSON object
-        val aboutTitle = jsonObject.getJSONObject("about").getString("aboutTitle")
+        val aboutTitle = jsonObject.getJSONObject("about").getString("aboutTitle_tv")
+        val aboutText = jsonObject.getJSONObject("about").getString("aboutText_tv")
         Log.d("application primary texts", "loadJsonAndSaveItIntoWidgets: $aboutTitle")
-        val aboutText = jsonObject.getJSONObject("about").getString("aboutText")
-        val settingsTitle = jsonObject.getJSONObject("settings").getString("settingsTitle")
-        val settingsButton1 = jsonObject.getJSONObject("settings").getString("settings_btn_1")
-        val mainMenuTitle = jsonObject.getJSONObject("mainMenu").getString("menuTitle")
-        val mainMenuLoadGame = jsonObject.getJSONObject("mainMenu").getString("Load game")
-        val mainMenuNewGame = jsonObject.getJSONObject("mainMenu").getString("newGame")
-        val mainMenuContinue = jsonObject.getJSONObject("mainMenu").getString("continue")
-        val mainMenuAbout = jsonObject.getJSONObject("mainMenu").getString("About")
-        val mainMenuExitGame = jsonObject.getJSONObject("mainMenu").getString("Exit Game")
+
+        val settingsTitle = jsonObject.getJSONObject("settings").getString("settingTitle_tv")
+        val settingsButton1 = jsonObject.getJSONObject("settings").getString("settings_btn_back")
+
+        val mainMenuTitle = jsonObject.getJSONObject("mainMenu").getString("menuTitle_tv")
+        val mainMenuNewGame = jsonObject.getJSONObject("mainMenu").getString("newGame_btn")
+        val mainMenuContinue = jsonObject.getJSONObject("mainMenu").getString("continue_btn")
+        val mainMenuSettings = jsonObject.getJSONObject("mainMenu").getString("settings_btn")
+        val mainMenuAbout = jsonObject.getJSONObject("mainMenu").getString("about_btn")
+        val mainMenuExitGame = jsonObject.getJSONObject("mainMenu").getString("exitGame_btn")
     }
 
     private fun loadJSONFromAsset(filename: String): String {

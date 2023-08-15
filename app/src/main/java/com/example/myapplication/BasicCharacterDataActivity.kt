@@ -1,7 +1,9 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -12,9 +14,13 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.myapplication.MainActivity.Companion.viewModel
 import com.example.myapplication.data_store.DataStoreViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.io.*
+import java.nio.charset.Charset
 
 
 class BasicCharacterDataActivity : AppCompatActivity() {
@@ -43,9 +49,10 @@ class BasicCharacterDataActivity : AppCompatActivity() {
             lifecycleScope.launch(Dispatchers.IO) {
                 saveData()
             }
-            val intent = Intent(this, NewGameActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, NewGameActivity::class.java)
+//            startActivity(intent)
             // Apply transition animation
+            finish()
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             //'IO' for background task
             //'Main' for Main Ui or Main thread task
@@ -86,8 +93,6 @@ class BasicCharacterDataActivity : AppCompatActivity() {
         eyesColorEditText.text.clear()
     }
 
-    private lateinit var viewModel: DataStoreViewModel
-
     companion object {
         val characterNameKey = stringPreferencesKey("character_name")
         val characterClassKey = stringPreferencesKey("character_class")
@@ -102,7 +107,7 @@ class BasicCharacterDataActivity : AppCompatActivity() {
     }
 
     private suspend fun saveData() {
-        viewModel = ViewModelProvider(this)[DataStoreViewModel::class.java]
+//        viewModel = ViewModelProvider(this)[DataStoreViewModel::class.java]
         val dataStore = viewModel.dataStore
         val characterName = characterNameEditText.text.toString()
         val charClass = classEditText.text.toString()
@@ -114,6 +119,8 @@ class BasicCharacterDataActivity : AppCompatActivity() {
         val weight = weightEditText.text.toString()
         val hair = hairColorEditText.text.toString()
         val eyes = eyesColorEditText.text.toString()
+
+        Log.d("saveData", "saveData: Agha Rassoool")
 
         dataStore.edit { Preferences ->
             Preferences[characterNameKey] = characterName
@@ -127,7 +134,62 @@ class BasicCharacterDataActivity : AppCompatActivity() {
             Preferences[characterHairKey] = hair
             Preferences[characterEyesKey] = eyes
         }
+
+
+        Log.d("saveData", "saveData: Agha Rassoool")
+        saveDataToJson()
     }
 
+    private fun saveDataToJson() {
+        val jsonString: String = loadJSONFromAsset("player_data.json")
+        val jsonObject = JSONObject(jsonString)
+
+        // Modify the JSON object with new values
+        val playerInfo = jsonObject.getJSONObject("player_info")
+        playerInfo.put("name", characterNameEditText.text.toString())
+        playerInfo.put("class", classEditText.text.toString())
+        playerInfo.put("background", backgroundEditText.text.toString())
+        playerInfo.put("race", raceEditText.text.toString())
+        playerInfo.put("alignment", alignmentEditText.text.toString())
+        playerInfo.put("age", ageEditText.text.toString())
+        playerInfo.put("height", heightEditText.text.toString())
+        playerInfo.put("weight", weightEditText.text.toString())
+        playerInfo.put("hair_color", hairColorEditText.text.toString())
+        playerInfo.put("eyes_color", eyesColorEditText.text.toString())
+
+        // Convert the modified JSON object back to a string
+        val modifiedJsonString = jsonObject.toString()
+
+        // Save the modified JSON string to a file
+        saveJSONToFile("player_data.json", modifiedJsonString)
+    }
+
+    private fun saveJSONToFile(filename: String, jsonString: String) {
+        try {
+            val file = File(filesDir, filename)
+            val fileOutputStream = FileOutputStream(file)
+            val outputStreamWriter = OutputStreamWriter(fileOutputStream, Charset.defaultCharset())
+            val bufferedWriter = BufferedWriter(outputStreamWriter)
+            bufferedWriter.use {
+                it.write(jsonString)
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+    }
+
+    private fun loadJSONFromAsset(filename: String): String {
+        return try {
+            val inputStream = assets.open(filename)
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+            buffer.toString(Charset.defaultCharset())
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            "{}" // Return an empty JSON object in case of an error
+        }
+    }
 
 }

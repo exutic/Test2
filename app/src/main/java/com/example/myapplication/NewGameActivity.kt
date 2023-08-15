@@ -71,4 +71,31 @@ class NewGameActivity : AppCompatActivity() {
         // Apply transition animation
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
+
+
+    private fun loadJsonAndSaveItIntoWidgets() {
+        // Load the JSON file from the assets folder
+        val jsonString: String = loadJSONFromAsset("player_data.json")
+
+        // Parse the JSON string into a JSONObject
+        val jsonObject = JSONObject(jsonString)
+
+        // Access the values from the JSON object
+        val aboutTitle = jsonObject.getJSONObject("player_info").getString("player_name")
+        val aboutText = jsonObject.getJSONObject("player_info").getString("race")
+    }
+
+    private fun loadJSONFromAsset(filename: String): String {
+        return try {
+            val inputStream = assets.open(filename)
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+            buffer.toString(Charset.defaultCharset())
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            "{}" // Return an empty JSON object in case of an error
+        }
+    }
 }
