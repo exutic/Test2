@@ -38,7 +38,7 @@ class NewGameActivity : AppCompatActivity() {
         // Set the chapter information in the TextView
         chapterTextView.text =
             "Chapter Number: ${chapterToLoad.chapterNumber}\n" + "Chapter Title: ${chapterToLoad.chapterTitle}\n" + "Chapter Text: ${chapterToLoad.chapterText}"
-
+        chapterTextView.append("\n${chapterToLoad.task}\n")
         // Show the buttons layout with a slide-up animation
         val buttonLayout = findViewById<LinearLayout>(R.id.buttonLayout)
         val slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up)
@@ -46,12 +46,17 @@ class NewGameActivity : AppCompatActivity() {
 
         // Set click listeners for the buttons
         val btn1 = findViewById<Button>(R.id.btn1)
+        btn1.text = chapterToLoad.choice1
         val btn2 = findViewById<Button>(R.id.btn2)
+        btn2.text = chapterToLoad.choice2
         val btn3 = findViewById<Button>(R.id.btn3)
+        btn3.text = chapterToLoad.choice3
 
         btn1.setOnClickListener {
             // Handle button 1 click
             // Perform the action associated with button 1
+            //save to json
+            //show a toast
         }
 
         btn2.setOnClickListener {
@@ -65,7 +70,8 @@ class NewGameActivity : AppCompatActivity() {
         }
     }
 
-    @Deprecated("Deprecated in Java")
+    @Deprecated(
+        "Deprecated in Java")
     override fun onBackPressed() {
         finish()
         // Apply transition animation

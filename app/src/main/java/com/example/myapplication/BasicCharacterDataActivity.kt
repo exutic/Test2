@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -56,6 +57,7 @@ class BasicCharacterDataActivity : AppCompatActivity() {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             //'IO' for background task
             //'Main' for Main Ui or Main thread task
+            startNewGame()
         }
 
         val clearButton = findViewById<Button>(R.id.clear_all_fields)
@@ -192,4 +194,13 @@ class BasicCharacterDataActivity : AppCompatActivity() {
         }
     }
 
+    private fun startNewGame() {
+        // Handle "New Game" button click
+        val intent = Intent(this, NewGameActivity::class.java)
+        startActivity(intent)
+        // Apply transition animation
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
 }
+
+

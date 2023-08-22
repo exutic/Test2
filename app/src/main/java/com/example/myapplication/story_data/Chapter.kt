@@ -7,7 +7,11 @@ import org.json.JSONObject
 data class Chapter(
     val chapterNumber: Int,
     val chapterTitle: String,
-    val chapterText: String
+    val chapterText: String,
+    val task: String,
+    val choice1: String,
+    val choice2: String,
+    val choice3: String
 )
 
 fun loadStoryFromJson(context: Context, fileName: String): List<Chapter> {
@@ -21,7 +25,11 @@ fun loadStoryFromJson(context: Context, fileName: String): List<Chapter> {
         val chapter = Chapter(
             chapterNumber = chapterObject.getInt("chapterNumber"),
             chapterTitle = chapterObject.getString("chapterTitle"),
-            chapterText = chapterObject.getString("chapterText")
+            chapterText = chapterObject.getString("chapterText"),
+            task = chapterObject.getString("task"),
+            choice1 = chapterObject.getString("choice1"),
+            choice2 = chapterObject.getString("choice2"),
+            choice3 = chapterObject.getString("choice3")
         )
         chapters.add(chapter)
     }

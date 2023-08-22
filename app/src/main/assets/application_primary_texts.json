@@ -10,7 +10,11 @@
   "mainMenu": {
     "menuTitle_tv": "Welcome, ",
     "newGame_btn": "New Game",
-    "continue_btn": "Continue",
+    "continue_btn": "Continue",{
+  "name": "John Doe",
+  "age": 30,
+  "email": "johndoe@example.com"
+}
     "settings_btn": "Setting",
     "about_btn": "About",
     "exitGame_btn": "Exit Game"

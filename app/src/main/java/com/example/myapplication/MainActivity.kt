@@ -20,10 +20,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.data_store.DataStoreViewModel
@@ -43,6 +40,8 @@ class MainActivity : AppCompatActivity() {
     companion object{
         lateinit var viewModel: DataStoreViewModel
     }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,7 +51,6 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[DataStoreViewModel::class.java]
 
-        loadJsonAndSaveItIntoWidgets()
     }
 
     private fun findViews() {
@@ -256,4 +254,5 @@ class MainActivity : AppCompatActivity() {
             "{}" // Return an empty JSON object in case of an error
         }
     }
+
 }
