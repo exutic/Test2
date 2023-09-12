@@ -1,22 +1,17 @@
-package com.example.myapplication
+package com.example.myapplication.game
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.myapplication.MainActivity.Companion.viewModel
-import com.example.myapplication.data_store.DataStoreViewModel
+import com.example.myapplication.R
+import com.example.myapplication.main.MainActivity.Companion.viewModel
+import com.example.myapplication.main.NewGameActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -24,7 +19,7 @@ import java.io.*
 import java.nio.charset.Charset
 
 
-class BasicCharacterDataActivity : AppCompatActivity() {
+class CharacterDataInputActivity : AppCompatActivity() {
     private lateinit var characterNameEditText: EditText
     private lateinit var classEditText: EditText
     private lateinit var backgroundEditText: EditText
@@ -50,13 +45,9 @@ class BasicCharacterDataActivity : AppCompatActivity() {
             lifecycleScope.launch(Dispatchers.IO) {
                 saveData()
             }
-//            val intent = Intent(this, NewGameActivity::class.java)
-//            startActivity(intent)
-            // Apply transition animation
             finish()
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            //'IO' for background task
-            //'Main' for Main Ui or Main thread task
+
             startNewGame()
         }
 
@@ -68,7 +59,6 @@ class BasicCharacterDataActivity : AppCompatActivity() {
     }
 
     private fun findViews() {
-        // Initialize the EditTexts
         characterNameEditText = findViewById(R.id.character_name_edit_text)
         classEditText = findViewById(R.id.class_edit_text)
         backgroundEditText = findViewById(R.id.background_edit_text)
@@ -82,7 +72,6 @@ class BasicCharacterDataActivity : AppCompatActivity() {
     }
 
     private fun clearFields() {
-        // Clear all the EditText fields
         characterNameEditText.text.clear()
         classEditText.text.clear()
         backgroundEditText.text.clear()
@@ -109,7 +98,6 @@ class BasicCharacterDataActivity : AppCompatActivity() {
     }
 
     private suspend fun saveData() {
-//        viewModel = ViewModelProvider(this)[DataStoreViewModel::class.java]
         val dataStore = viewModel.dataStore
         val characterName = characterNameEditText.text.toString()
         val charClass = classEditText.text.toString()
@@ -195,10 +183,8 @@ class BasicCharacterDataActivity : AppCompatActivity() {
     }
 
     private fun startNewGame() {
-        // Handle "New Game" button click
         val intent = Intent(this, NewGameActivity::class.java)
         startActivity(intent)
-        // Apply transition animation
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 }

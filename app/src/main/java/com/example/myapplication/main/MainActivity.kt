@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.main
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -23,6 +23,8 @@ import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.myapplication.game.CharacterDataInputActivity
+import com.example.myapplication.R
 import com.example.myapplication.data_store.DataStoreViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
@@ -63,13 +65,6 @@ class MainActivity : AppCompatActivity() {
         mediaPlayer?.isLooping = true
 
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        // Release MediaPlayer resources
-        mediaPlayer?.release()
-        mediaPlayer = null
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -114,7 +109,7 @@ class MainActivity : AppCompatActivity() {
 
     fun startNewGame(view: View) {
         // Handle "New Game" button click
-        val intent = Intent(this, BasicCharacterDataActivity::class.java)
+        val intent = Intent(this, CharacterDataInputActivity::class.java)
         startActivity(intent)
         // Apply transition animation
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -218,41 +213,11 @@ class MainActivity : AppCompatActivity() {
 //        }
     }
 
-    private fun loadJsonAndSaveItIntoWidgets() {
-        // Load the JSON file from the assets folder
-        val jsonString: String = loadJSONFromAsset("application_primary_texts.json")
-
-        // Parse the JSON string into a JSONObject
-        val jsonObject = JSONObject(jsonString)
-
-        // Access the values from the JSON object
-        val aboutTitle = jsonObject.getJSONObject("about").getString("aboutTitle_tv")
-        val aboutText = jsonObject.getJSONObject("about").getString("aboutText_tv")
-        Log.d("application primary texts", "loadJsonAndSaveItIntoWidgets: $aboutTitle")
-
-        val settingsTitle = jsonObject.getJSONObject("settings").getString("settingTitle_tv")
-        val settingsButton1 = jsonObject.getJSONObject("settings").getString("settings_btn_back")
-
-        val mainMenuTitle = jsonObject.getJSONObject("mainMenu").getString("menuTitle_tv")
-        val mainMenuNewGame = jsonObject.getJSONObject("mainMenu").getString("newGame_btn")
-        val mainMenuContinue = jsonObject.getJSONObject("mainMenu").getString("continue_btn")
-        val mainMenuSettings = jsonObject.getJSONObject("mainMenu").getString("settings_btn")
-        val mainMenuAbout = jsonObject.getJSONObject("mainMenu").getString("about_btn")
-        val mainMenuExitGame = jsonObject.getJSONObject("mainMenu").getString("exitGame_btn")
-    }
-
-    private fun loadJSONFromAsset(filename: String): String {
-        return try {
-            val inputStream = assets.open(filename)
-            val size = inputStream.available()
-            val buffer = ByteArray(size)
-            inputStream.read(buffer)
-            inputStream.close()
-            buffer.toString(Charset.defaultCharset())
-        } catch (ex: IOException) {
-            ex.printStackTrace()
-            "{}" // Return an empty JSON object in case of an error
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        // Release MediaPlayer resources
+        mediaPlayer?.release()
+        mediaPlayer = null
     }
 
 }

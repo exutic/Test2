@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.main
 
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.example.myapplication.app_tools.FontManager
+import com.example.myapplication.R
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.ui.PlayerView

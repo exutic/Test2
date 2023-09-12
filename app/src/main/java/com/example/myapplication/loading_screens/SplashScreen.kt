@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.loading_screens
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.main.MainActivity
+import com.example.myapplication.R
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreen : AppCompatActivity() {

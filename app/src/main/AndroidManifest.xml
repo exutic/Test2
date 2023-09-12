@@ -19,49 +19,49 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".StoryActivity"
+            android:name=".game.StoryActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".BasicCharacterDataActivity"
+            android:name=".game.CharacterDataInputActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CharacterSelectActivity"
+            android:name=".game.CharacterSelectActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".main.SettingsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".AboutActivity"
+            android:name=".main.AboutActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".NewGameActivity"
+            android:name=".main.NewGameActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SplashScreen"
+            android:name=".loading_screens.SplashScreen"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
@@ -74,7 +74,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
